@@ -89,6 +89,23 @@ class _SiteSetupScreenState extends ConsumerState<SiteSetupScreen> {
                   color: failed ? context.colors.danger : context.colors.muted,
                 ),
               ),
+              if (failed && authState.errorDetail != null) ...[
+                const SizedBox(height: AppSpacing.sm),
+                Container(
+                  padding: const EdgeInsets.all(AppSpacing.sm),
+                  decoration: BoxDecoration(
+                    color: context.colors.surfaceAlt,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: SelectableText(
+                    authState.errorDetail!,
+                    style: AppTypography.mono.copyWith(
+                      fontSize: 11,
+                      color: context.colors.muted,
+                    ),
+                  ),
+                ),
+              ],
               const SizedBox(height: AppSpacing.xl),
               if (editable) ...[
                 TextField(

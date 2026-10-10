@@ -56,6 +56,7 @@ class AuthController extends Notifier<AuthState> {
       state = state.copyWith(
         status: AuthStatus.bootstrapFailed,
         errorMessage: error.message,
+        errorDetail: error.debugDetail,
       );
       return;
     }
@@ -83,7 +84,11 @@ class AuthController extends Notifier<AuthState> {
   Future<void> setSiteUrl(String url) async {
     await ref.read(secureTokenStoreProvider).saveSiteUrl(url);
     ref.invalidate(baseUrlProvider);
-    state = state.copyWith(status: AuthStatus.loading, errorMessage: null);
+    state = state.copyWith(
+      status: AuthStatus.loading,
+      errorMessage: null,
+      errorDetail: null,
+    );
     await start();
   }
 

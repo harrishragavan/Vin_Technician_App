@@ -91,21 +91,24 @@ class ApiClient {
     final response = error.response;
     if (response != null) {
       final body = response.data;
+      final status = response.statusCode ?? 0;
       if (body is Map) {
         final code = body['code'] as String?;
         final message = body['message'] as String?;
         if (code != null) {
           return ApiException(
-            statusCode: response.statusCode ?? 0,
+            statusCode: status,
             code: code,
             message: message ?? 'Something went wrong.',
+            debugDetail: 'HTTP $status\n${_truncate(body.toString())}',
           );
         }
       }
       return ApiException(
-        statusCode: response.statusCode ?? 0,
+        statusCode: status,
         code: ApiException.unknown,
         message: 'Something went wrong. Try again.',
+        debugDetail: 'HTTP $status\n${_truncate(body.toString())}',
       );
     }
 
@@ -114,17 +117,23 @@ class ApiClient {
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
       case DioExceptionType.connectionError:
-        return const ApiException(
+        return ApiException(
           statusCode: 0,
           code: ApiException.offline,
           message: 'No connection. Showing what was last loaded.',
+          debugDetail: '${error.type}: ${error.message}',
         );
       default:
-        return const ApiException(
+        return ApiException(
           statusCode: 0,
           code: ApiException.unreachableSite,
           message: "Can't reach this site. Check the URL and try again.",
+          debugDetail: '${error.type}: ${error.message}',
         );
     }
+  }
+
+  String _truncate(String text, [int maxLength = 500]) {
+    return text.length <= maxLength ? text : '${text.substring(0, maxLength)}…';
   }
 }

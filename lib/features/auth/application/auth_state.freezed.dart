@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AuthState {
 
- AuthStatus get status; AuthCredentials? get credentials; Map<String, dynamic>? get bootstrapInfo; String? get errorMessage;
+ AuthStatus get status; AuthCredentials? get credentials; Map<String, dynamic>? get bootstrapInfo; String? get errorMessage; String? get errorDetail;
 /// Create a copy of AuthState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -27,20 +27,20 @@ $AuthStateCopyWith<AuthState> get copyWith => _$AuthStateCopyWithImpl<AuthState>
 @override
 bool operator ==(Object other) {
   final _this = this as AuthState;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthState&&(identical(other.status, _this.status) || other.status == _this.status)&&(identical(other.credentials, _this.credentials) || other.credentials == _this.credentials)&&const DeepCollectionEquality().equals(other.bootstrapInfo, _this.bootstrapInfo)&&(identical(other.errorMessage, _this.errorMessage) || other.errorMessage == _this.errorMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthState&&(identical(other.status, _this.status) || other.status == _this.status)&&(identical(other.credentials, _this.credentials) || other.credentials == _this.credentials)&&const DeepCollectionEquality().equals(other.bootstrapInfo, _this.bootstrapInfo)&&(identical(other.errorMessage, _this.errorMessage) || other.errorMessage == _this.errorMessage)&&(identical(other.errorDetail, _this.errorDetail) || other.errorDetail == _this.errorDetail));
 }
 
 
 @override
 int get hashCode {
   final _this = this as AuthState;
-  return Object.hash(runtimeType,_this.status,_this.credentials,const DeepCollectionEquality().hash(_this.bootstrapInfo),_this.errorMessage);
+  return Object.hash(runtimeType,_this.status,_this.credentials,const DeepCollectionEquality().hash(_this.bootstrapInfo),_this.errorMessage,_this.errorDetail);
 }
 
 @override
 String toString() {
   final _this = this as AuthState;
-  return 'AuthState(status: ${_this.status}, credentials: ${_this.credentials}, bootstrapInfo: ${_this.bootstrapInfo}, errorMessage: ${_this.errorMessage})';
+  return 'AuthState(status: ${_this.status}, credentials: ${_this.credentials}, bootstrapInfo: ${_this.bootstrapInfo}, errorMessage: ${_this.errorMessage}, errorDetail: ${_this.errorDetail})';
 }
 
 
@@ -51,7 +51,7 @@ abstract mixin class $AuthStateCopyWith<$Res>  {
   factory $AuthStateCopyWith(AuthState value, $Res Function(AuthState) _then) = _$AuthStateCopyWithImpl;
 @useResult
 $Res call({
- AuthStatus status, AuthCredentials? credentials, Map<String, dynamic>? bootstrapInfo, String? errorMessage
+ AuthStatus status, AuthCredentials? credentials, Map<String, dynamic>? bootstrapInfo, String? errorMessage, String? errorDetail
 });
 
 
@@ -68,12 +68,13 @@ class _$AuthStateCopyWithImpl<$Res>
 
 /// Create a copy of AuthState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? credentials = freezed,Object? bootstrapInfo = freezed,Object? errorMessage = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? credentials = freezed,Object? bootstrapInfo = freezed,Object? errorMessage = freezed,Object? errorDetail = freezed,}) {
   return _then(AuthState(
 status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as AuthStatus,credentials: freezed == credentials ? _self.credentials : credentials // ignore: cast_nullable_to_non_nullable
 as AuthCredentials?,bootstrapInfo: freezed == bootstrapInfo ? _self.bootstrapInfo : bootstrapInfo // ignore: cast_nullable_to_non_nullable
 as Map<String, dynamic>?,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
+as String?,errorDetail: freezed == errorDetail ? _self.errorDetail : errorDetail // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -159,10 +160,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( AuthStatus status,  AuthCredentials? credentials,  Map<String, dynamic>? bootstrapInfo,  String? errorMessage)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( AuthStatus status,  AuthCredentials? credentials,  Map<String, dynamic>? bootstrapInfo,  String? errorMessage,  String? errorDetail)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AuthState() when $default != null:
-return $default(_that.status,_that.credentials,_that.bootstrapInfo,_that.errorMessage);case _:
+return $default(_that.status,_that.credentials,_that.bootstrapInfo,_that.errorMessage,_that.errorDetail);case _:
   return orElse();
 
 }
@@ -180,10 +181,10 @@ return $default(_that.status,_that.credentials,_that.bootstrapInfo,_that.errorMe
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( AuthStatus status,  AuthCredentials? credentials,  Map<String, dynamic>? bootstrapInfo,  String? errorMessage)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( AuthStatus status,  AuthCredentials? credentials,  Map<String, dynamic>? bootstrapInfo,  String? errorMessage,  String? errorDetail)  $default,) {final _that = this;
 switch (_that) {
 case _AuthState():
-return $default(_that.status,_that.credentials,_that.bootstrapInfo,_that.errorMessage);case _:
+return $default(_that.status,_that.credentials,_that.bootstrapInfo,_that.errorMessage,_that.errorDetail);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -200,10 +201,10 @@ return $default(_that.status,_that.credentials,_that.bootstrapInfo,_that.errorMe
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( AuthStatus status,  AuthCredentials? credentials,  Map<String, dynamic>? bootstrapInfo,  String? errorMessage)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( AuthStatus status,  AuthCredentials? credentials,  Map<String, dynamic>? bootstrapInfo,  String? errorMessage,  String? errorDetail)?  $default,) {final _that = this;
 switch (_that) {
 case _AuthState() when $default != null:
-return $default(_that.status,_that.credentials,_that.bootstrapInfo,_that.errorMessage);case _:
+return $default(_that.status,_that.credentials,_that.bootstrapInfo,_that.errorMessage,_that.errorDetail);case _:
   return null;
 
 }
@@ -215,7 +216,7 @@ return $default(_that.status,_that.credentials,_that.bootstrapInfo,_that.errorMe
 
 
 class _AuthState implements AuthState {
-  const _AuthState({this.status = AuthStatus.loading, this.credentials,  Map<String, dynamic>? bootstrapInfo, this.errorMessage}): _bootstrapInfo = bootstrapInfo;
+  const _AuthState({this.status = AuthStatus.loading, this.credentials,  Map<String, dynamic>? bootstrapInfo, this.errorMessage, this.errorDetail}): _bootstrapInfo = bootstrapInfo;
   
 
 @override@JsonKey() final  AuthStatus status;
@@ -230,6 +231,7 @@ class _AuthState implements AuthState {
 }
 
 @override final  String? errorMessage;
+@override final  String? errorDetail;
 
 /// Create a copy of AuthState
 /// with the given fields replaced by the non-null parameter values.
@@ -241,18 +243,18 @@ _$AuthStateCopyWith<_AuthState> get copyWith => __$AuthStateCopyWithImpl<_AuthSt
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthState&&(identical(other.status, status) || other.status == status)&&(identical(other.credentials, credentials) || other.credentials == credentials)&&const DeepCollectionEquality().equals(other.bootstrapInfo, _bootstrapInfo)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthState&&(identical(other.status, status) || other.status == status)&&(identical(other.credentials, credentials) || other.credentials == credentials)&&const DeepCollectionEquality().equals(other.bootstrapInfo, _bootstrapInfo)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&(identical(other.errorDetail, errorDetail) || other.errorDetail == errorDetail));
 }
 
 
 @override
 int get hashCode {
-    return Object.hash(runtimeType,status,credentials,const DeepCollectionEquality().hash(_bootstrapInfo),errorMessage);
+    return Object.hash(runtimeType,status,credentials,const DeepCollectionEquality().hash(_bootstrapInfo),errorMessage,errorDetail);
 }
 
 @override
 String toString() {
-    return 'AuthState(status: $status, credentials: $credentials, bootstrapInfo: $bootstrapInfo, errorMessage: $errorMessage)';
+    return 'AuthState(status: $status, credentials: $credentials, bootstrapInfo: $bootstrapInfo, errorMessage: $errorMessage, errorDetail: $errorDetail)';
 }
 
 
@@ -263,7 +265,7 @@ abstract mixin class _$AuthStateCopyWith<$Res> implements $AuthStateCopyWith<$Re
   factory _$AuthStateCopyWith(_AuthState value, $Res Function(_AuthState) _then) = __$AuthStateCopyWithImpl;
 @override @useResult
 $Res call({
- AuthStatus status, AuthCredentials? credentials, Map<String, dynamic>? bootstrapInfo, String? errorMessage
+ AuthStatus status, AuthCredentials? credentials, Map<String, dynamic>? bootstrapInfo, String? errorMessage, String? errorDetail
 });
 
 
@@ -280,12 +282,13 @@ class __$AuthStateCopyWithImpl<$Res>
 
 /// Create a copy of AuthState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? status = null,Object? credentials = freezed,Object? bootstrapInfo = freezed,Object? errorMessage = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? status = null,Object? credentials = freezed,Object? bootstrapInfo = freezed,Object? errorMessage = freezed,Object? errorDetail = freezed,}) {
   return _then(_AuthState(
 status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as AuthStatus,credentials: freezed == credentials ? _self.credentials : credentials // ignore: cast_nullable_to_non_nullable
 as AuthCredentials?,bootstrapInfo: freezed == bootstrapInfo ? _self._bootstrapInfo : bootstrapInfo // ignore: cast_nullable_to_non_nullable
 as Map<String, dynamic>?,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
+as String?,errorDetail: freezed == errorDetail ? _self.errorDetail : errorDetail // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }

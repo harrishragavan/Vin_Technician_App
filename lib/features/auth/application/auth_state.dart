@@ -29,5 +29,6 @@ abstract class AuthState with _$AuthState {
     AuthCredentials? credentials,
     Map<String, dynamic>? bootstrapInfo,
     String? errorMessage,
+    String? errorDetail,
   }) = _AuthState;
 }

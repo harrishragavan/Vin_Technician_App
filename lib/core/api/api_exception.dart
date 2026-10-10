@@ -7,6 +7,7 @@ class ApiException implements Exception {
     required this.statusCode,
     required this.code,
     required this.message,
+    this.debugDetail,
   });
 
   /// HTTP status code, e.g. 409 for ACTIVE_JOB_EXISTS.
@@ -17,6 +18,12 @@ class ApiException implements Exception {
 
   /// Human-readable fallback if the app has no copy for [code] yet.
   final String message;
+
+  /// Raw diagnostic text (status line + a snippet of the response body, or
+  /// the underlying Dio error) for screens that show it during development
+  /// — the mobile API doesn't exist on most sites yet, so "what actually
+  /// came back" matters more than a polished message right now.
+  final String? debugDetail;
 
   /// The device has no usable connection (DNS/socket failure, timeout).
   bool get isNetworkError => code == offline;
