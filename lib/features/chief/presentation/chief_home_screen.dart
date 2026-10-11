@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/design/app_colors.dart';
-import '../../../core/design/app_spacing.dart';
-import '../../../core/design/app_typography.dart';
 import '../../auth/application/auth_controller.dart';
 import '../../auth/presentation/profile_menu.dart';
+import 'analytics_screen.dart';
+import 'attendance_screen.dart';
 import 'chief_board_screen.dart';
+import 'team_day_screen.dart';
+import 'technician_map_screen.dart';
 
-/// Five tabs (plan, "Chief technician dashboard"). Team day, Map,
-/// Analytics and Attendance need chief.team_day/map/analytics/attendance,
-/// which don't exist yet — Board ships first since chief.board does, and
-/// is the default tab for now.
+/// Five tabs (plan, "Chief technician dashboard"). Team day is the home
+/// tab per the plan ("answers the first question of the day at a glance"),
+/// and is the default now that chief.team_day exists.
 class ChiefHomeScreen extends ConsumerWidget {
   const ChiefHomeScreen({super.key});
 
@@ -21,7 +21,6 @@ class ChiefHomeScreen extends ConsumerWidget {
 
     return DefaultTabController(
       length: 5,
-      initialIndex: 1,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Chief dashboard'),
@@ -40,40 +39,12 @@ class ChiefHomeScreen extends ConsumerWidget {
         ),
         body: const TabBarView(
           children: [
-            _ComingSoonTab(
-              message: 'Team day opens here once chief.team_day ships.',
-            ),
+            TeamDayScreen(),
             ChiefBoardScreen(),
-            _ComingSoonTab(
-              message: 'The technician map opens here once chief.map ships.',
-            ),
-            _ComingSoonTab(
-              message: 'Analytics opens here once chief.analytics ships.',
-            ),
-            _ComingSoonTab(
-              message: 'Attendance opens here once chief.attendance ships.',
-            ),
+            TechnicianMapScreen(),
+            AnalyticsScreen(),
+            AttendanceScreen(),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _ComingSoonTab extends StatelessWidget {
-  const _ComingSoonTab({required this.message});
-
-  final String message;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.lg),
-        child: Text(
-          message,
-          textAlign: TextAlign.center,
-          style: AppTypography.body.copyWith(color: context.colors.muted),
         ),
       ),
     );
