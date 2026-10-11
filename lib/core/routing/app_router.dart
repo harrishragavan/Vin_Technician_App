@@ -8,6 +8,7 @@ import '../../features/auth/presentation/sign_in_screen.dart';
 import '../../features/auth/presentation/site_setup_screen.dart';
 import '../../features/auth/presentation/splash_screen.dart';
 import '../../features/chief/presentation/chief_home_screen.dart';
+import '../../features/technician/presentation/job_sheet_screen.dart';
 import '../../features/technician/presentation/technician_home_screen.dart';
 
 /// Notifies go_router's `redirect` whenever [AuthState.status] changes, so
@@ -65,6 +66,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/technician',
         builder: (context, state) => const TechnicianHomeScreen(),
+      ),
+      GoRoute(
+        path: '/technician/ticket/:ticketId',
+        builder: (context, state) =>
+            JobSheetScreen(ticketId: state.pathParameters['ticketId']!),
       ),
       GoRoute(
         path: '/chief',
