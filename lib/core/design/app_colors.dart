@@ -107,3 +107,16 @@ class AppColors extends ThemeExtension<AppColors> {
 extension AppColorsContext on BuildContext {
   AppColors get colors => Theme.of(this).extension<AppColors>()!;
 }
+
+extension HexColor on String {
+  /// Parses a `"#RRGGBB"` string from the server (e.g. a status colour
+  /// from `meta.options`) into a [Color]. Falls back to mid-grey for a
+  /// malformed value rather than throwing, since this is server data, not
+  /// something the app controls.
+  Color toColor() {
+    final hex = replaceFirst('#', '');
+    final value = int.tryParse(hex, radix: 16);
+    if (value == null) return const Color(0xFF6B7280);
+    return Color(0xFF000000 | value);
+  }
+}

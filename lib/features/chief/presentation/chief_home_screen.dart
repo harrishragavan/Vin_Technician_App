@@ -6,11 +6,12 @@ import '../../../core/design/app_spacing.dart';
 import '../../../core/design/app_typography.dart';
 import '../../auth/application/auth_controller.dart';
 import '../../auth/presentation/profile_menu.dart';
+import 'chief_board_screen.dart';
 
-/// "Team day" — the chief's home screen (plan, "Screens → Chief technician
-/// dashboard", step 1). The time-axis view, board, map, analytics and
-/// attendance tabs land in Phase 5 once `chief.*` exists on the server;
-/// this is the navigation shell they build inside.
+/// Five tabs (plan, "Chief technician dashboard"). Team day, Map,
+/// Analytics and Attendance need chief.team_day/map/analytics/attendance,
+/// which don't exist yet — Board ships first since chief.board does, and
+/// is the default tab for now.
 class ChiefHomeScreen extends ConsumerWidget {
   const ChiefHomeScreen({super.key});
 
@@ -18,33 +19,61 @@ class ChiefHomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final credentials = ref.watch(authControllerProvider).credentials;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Team day'),
-        actions: [ProfileMenuButton(credentials: credentials)],
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.lg),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.groups_outlined,
-                size: 40,
-                color: context.colors.muted,
-              ),
-              const SizedBox(height: AppSpacing.md),
-              Text('Signed in', style: AppTypography.heading),
-              const SizedBox(height: AppSpacing.xs),
-              Text(
-                'Team day, Board, Map, Analytics and Attendance open here\n'
-                'once chief.team_day and chief.board ship.',
-                textAlign: TextAlign.center,
-                style: AppTypography.body.copyWith(color: context.colors.muted),
-              ),
+    return DefaultTabController(
+      length: 5,
+      initialIndex: 1,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Chief dashboard'),
+          actions: [ProfileMenuButton(credentials: credentials)],
+          bottom: const TabBar(
+            isScrollable: true,
+            tabAlignment: TabAlignment.start,
+            tabs: [
+              Tab(text: 'Team day'),
+              Tab(text: 'Board'),
+              Tab(text: 'Map'),
+              Tab(text: 'Analytics'),
+              Tab(text: 'Attendance'),
             ],
           ),
+        ),
+        body: const TabBarView(
+          children: [
+            _ComingSoonTab(
+              message: 'Team day opens here once chief.team_day ships.',
+            ),
+            ChiefBoardScreen(),
+            _ComingSoonTab(
+              message: 'The technician map opens here once chief.map ships.',
+            ),
+            _ComingSoonTab(
+              message: 'Analytics opens here once chief.analytics ships.',
+            ),
+            _ComingSoonTab(
+              message: 'Attendance opens here once chief.attendance ships.',
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ComingSoonTab extends StatelessWidget {
+  const _ComingSoonTab({required this.message});
+
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.lg),
+        child: Text(
+          message,
+          textAlign: TextAlign.center,
+          style: AppTypography.body.copyWith(color: context.colors.muted),
         ),
       ),
     );
